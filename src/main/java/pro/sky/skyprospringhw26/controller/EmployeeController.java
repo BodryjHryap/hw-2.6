@@ -1,17 +1,21 @@
 package pro.sky.skyprospringhw26.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pro.sky.skyprospringhw26.model.Employee;
 import pro.sky.skyprospringhw26.service.EmployeeService;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
+
+    @ExceptionHandler(RuntimeException.class)
+    public String handleException(RuntimeException e) {
+        return e.getMessage();
+    }
+
     private final EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
@@ -34,7 +38,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/getAllEmployees")
-    public List<Employee> getAllEmployees() {
+    public Collection<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 }
